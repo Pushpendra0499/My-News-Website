@@ -1,6 +1,6 @@
 console.log("Welcome in my site Mukku Tech")
 
- const API_KEY= "Your-API key"; 
+ const API_KEY= "c3f53e64ff7441c2b389199002adc92a"; 
 const url = "https://newsapi.org/v2/everything?q=";
 
 window.addEventListener("load", () => fetchNews("India"));
