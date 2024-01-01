@@ -1,6 +1,6 @@
-console.log("Welcome in my site Mukku Tech")
+console.log("Welcome to my site Mukku Tech");
 
- const API_KEY= "c3f53e64ff7441c2b389199002adc92a"; 
+const API_KEY = "c3f53e64ff7441c2b389199002adc92a";
 const url = "https://newsapi.org/v2/everything?q=";
 
 window.addEventListener("load", () => fetchNews("India"));
@@ -10,14 +10,34 @@ function reload() {
 }
 
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-    const data = await res.json();
-    bindData(data.articles);
+    try {
+        const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        if (data.articles) {
+            bindData(data.articles);
+        } else {
+            console.error("Articles not found in API response:", data);
+        }
+    } catch (error) {
+        console.error("Error fetching news:", error);
+    }
 }
 
 function bindData(articles) {
     const cardsContainer = document.getElementById("cards-container");
     const newsCardTemplate = document.getElementById("template-news-card");
+
+    // Check if articles is defined and has a length
+    if (!articles || articles.length === 0) {
+        console.error("No articles to display.");
+        return;
+    }
 
     cardsContainer.innerHTML = "";
 
